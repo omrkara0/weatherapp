@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'Homepage.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 class City extends StatefulWidget {
   const City({Key? key}) : super(key: key);
@@ -12,6 +14,7 @@ class City extends StatefulWidget {
 
 class _CityState extends State<City> {
   var city;
+  bool varmi = false;
   final TextEditingController _controller = TextEditingController();
 
   @override
@@ -39,13 +42,25 @@ class _CityState extends State<City> {
                           borderRadius: BorderRadius.circular(15)))),
             ),
             FlatButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => HomePage(city: city),
-                    ));
-                _controller.clear();
+              onPressed: () async {
+                varmi = await InternetConnectionChecker().hasConnection;
+                // final text = varmi ? null : "İnternet Yok";
+
+                if (varmi) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(city: city),
+                      ));
+                  _controller.clear();
+                } else if (varmi = false) {
+                  showSimpleNotification(
+                      Text(
+                        "İnternet Bulunamadı",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                      background: Colors.red);
+                }
               },
               child: Text(
                 "BUL",

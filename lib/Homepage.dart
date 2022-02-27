@@ -124,13 +124,15 @@ class _HomePageState extends State<HomePage> {
                         width: 15,
                       ),
                       currently != null && description != null
-                          ? Text(
-                              currently.toString() +
-                                  " / " +
-                                  description.toString(),
-                              style: GoogleFonts.lato(
-                                  color: Colors.white.withOpacity(0.8),
-                                  fontSize: 25))
+                          ? Expanded(
+                              child: Text(
+                                  currently.toString() +
+                                      " / " +
+                                      description.toString(),
+                                  style: GoogleFonts.lato(
+                                      color: Colors.white.withOpacity(0.8),
+                                      fontSize: 25)),
+                            )
                           : CircularProgressIndicator(),
                     ],
                   ),
@@ -234,6 +236,9 @@ class _HomePageState extends State<HomePage> {
     } else if (currently.toString() == "Mist") {
       return DecorationImage(
           image: AssetImage("assets/images/misty.jpg"), fit: BoxFit.fill);
+    } else if (currently.toString() == "Clear") {
+      return DecorationImage(
+          image: AssetImage("assets/images/clear.png"), fit: BoxFit.fill);
     }
 
     return DecorationImage(
@@ -269,6 +274,12 @@ class _HomePageState extends State<HomePage> {
     } else if (currently.toString() == "Mist") {
       return FaIcon(
         FontAwesomeIcons.cloudversify,
+        color: Colors.white,
+        size: 30,
+      );
+    } else if (currently.toString() == "Clear") {
+      return FaIcon(
+        FontAwesomeIcons.cloudflare,
         color: Colors.white,
         size: 30,
       );
